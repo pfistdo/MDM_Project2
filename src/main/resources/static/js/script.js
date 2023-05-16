@@ -34,6 +34,26 @@ function predict_age() {
   }
 }
 
+// Preview image before upload
+function previewImage() {
+  const preview = document.querySelector("#imagePreview");
+  const file = document.querySelector("input[type=file]").files[0];
+  const reader = new FileReader();
+
+  reader.addEventListener(
+    "load",
+    function () {
+      preview.classList.add("mb-3")
+      preview.innerHTML = '<img src="' + reader.result + '" class="img-thumbnail">';
+    },
+    false
+  );
+
+  if (file) {
+    reader.readAsDataURL(file);
+  }
+}
+
 // Bootstrap alert
 const alert = (message, type) => {
   const alertPlaceholder = document.getElementById('alerts')
