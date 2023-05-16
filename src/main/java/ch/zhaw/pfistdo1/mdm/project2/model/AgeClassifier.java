@@ -2,12 +2,10 @@ package ch.zhaw.pfistdo1.mdm.project2.model;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.nio.FloatBuffer;
 import java.util.Collections;
 
-import javax.imageio.ImageIO;
 
 import ai.onnxruntime.*;
 
@@ -22,21 +20,20 @@ public class AgeClassifier {
             "more than 70" };
 
     /**
-     * The main entry point of the AgeClassifier application.
+     * Performs age classification on the given image and returns the predicted age.
      *
-     * @param args command line arguments
+     * @param image the input image to perform age classification on
+     * @return the predicted age as a string
      * @throws IOException  if there is an error reading the image file
      * @throws OrtException if there is an error with the ONNX model or inference
      */
-    public static void main(String[] args) throws IOException, OrtException {
-
+    public static String getAge(BufferedImage image) throws IOException, OrtException {
         // Load the ONNX model
         OrtEnvironment env = OrtEnvironment.getEnvironment();
         OrtSession.SessionOptions opts = new OrtSession.SessionOptions();
         OrtSession session = env.createSession("src/main/resources/static/model/vit_age_classifier.onnx", opts);
 
         // Load and preprocess the image
-        BufferedImage image = ImageIO.read(new File("src/main/resources/static/images/face.jpg"));
         float[] input = preProcessImage(image);
 
         // Reshape the input tensor to have a rank of 4
@@ -50,8 +47,7 @@ public class AgeClassifier {
 
         // Get the predicted class
         int predictedClass = argmax(outputArray[0]);
-        System.out.println("Predicted class: " + predictedClass);
-        System.out.println("Predicted label: " + getPredictedClassLabel(predictedClass));
+        return getPredictedClassLabel(predictedClass);
     }
 
     /**
