@@ -21,7 +21,7 @@ public class ServicesController {
 
     @GetMapping("/")
     public ModelAndView index() {
-        return new ModelAndView("index.html");
+        return new ModelAndView("templates/index.html");
     }
 
     @GetMapping("/ping")
