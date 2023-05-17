@@ -1,7 +1,8 @@
 function predict_age() {
   var img = document.getElementById("faceImage").files[0];
   var btn = document.getElementById("predictBtn");
-  
+  var resultDiv = document.getElementById("result");
+
   if (img != undefined) {
     // Prepare form data
     var form_data = new FormData();
@@ -18,8 +19,21 @@ function predict_age() {
       processData: false,
       data: form_data,
       type: "POST",
-      success: function (response) {
-        document.getElementById("result").innerHTML = response;
+      success: function (response) { //Set the corresponding age group as active
+        resultDiv.classList.remove("d-none");
+        resultDiv.childNodes.forEach((child) => {
+          if (child.nodeName == "UL") {
+            child.childNodes.forEach((li) => {
+              if (li.textContent == response) {
+                li.classList.add("active");
+              } else {
+                if (li.classList) {
+                  li.classList.remove("active");
+                }
+              }
+            });
+          }
+        });
       },
       error: function (response) {
         alert(response, "danger");

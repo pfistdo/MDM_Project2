@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.nio.FloatBuffer;
 import java.util.Collections;
 
-
 import ai.onnxruntime.*;
 
 /**
@@ -51,33 +50,45 @@ public class AgeClassifier {
     }
 
     /**
-     * Preprocesses the input image by resizing it and converting it to a float
-     * array.
+     * Preprocesses the input image by resizing and normalizing it to a float array.
+     * Saves the processed image.
      *
      * @param image the input image to preprocess
      * @return the preprocessed float array
      */
-    private static float[] preProcessImage(BufferedImage image) {
-        // Resize the image to the expected dimensions
+    private static float[] preProcessImage(BufferedImage image) throws IOException {
+        // Resize the image to the desired dimensions
         int targetWidth = 224;
         int targetHeight = 224;
-        BufferedImage resizedImage = new BufferedImage(targetWidth, targetHeight, BufferedImage.TYPE_INT_RGB);
-        Graphics2D g = resizedImage.createGraphics();
-        g.drawImage(image, 0, 0, targetWidth, targetHeight, null);
-        g.dispose();
+        BufferedImage resizedImage = resizeImage(image, targetWidth, targetHeight);
 
-        // Convert the resized image to pixel array
-        int[] pixels = resizedImage.getRGB(0, 0, targetWidth, targetHeight, null, 0, targetWidth);
-
-        // Perform normalization and create the float array
+        // Normalize the pixel values to the range of [0, 1]
         float[] image_np = new float[3 * targetWidth * targetHeight];
+        int[] pixels = resizedImage.getRGB(0, 0, targetWidth, targetHeight, null, 0, targetWidth);
         for (int i = 0; i < pixels.length; i++) {
             int pixel = pixels[i];
             image_np[i * 3] = ((pixel >> 16) & 0xFF) / 255.0f;
             image_np[i * 3 + 1] = ((pixel >> 8) & 0xFF) / 255.0f;
             image_np[i * 3 + 2] = (pixel & 0xFF) / 255.0f;
         }
+
         return image_np;
+    }
+
+    /**
+     * Resizes the input image to the target dimensions.
+     *
+     * @param image        the input image
+     * @param targetWidth  the target width
+     * @param targetHeight the target height
+     * @return the resized image
+     */
+    private static BufferedImage resizeImage(BufferedImage image, int targetWidth, int targetHeight) {
+        BufferedImage resizedImage = new BufferedImage(targetWidth, targetHeight, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g = resizedImage.createGraphics();
+        g.drawImage(image, 0, 0, targetWidth, targetHeight, null);
+        g.dispose();
+        return resizedImage;
     }
 
     /**
