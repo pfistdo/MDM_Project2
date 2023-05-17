@@ -24,7 +24,7 @@ function predict_age() {
         resultDiv.childNodes.forEach((child) => {
           if (child.nodeName == "UL") {
             child.childNodes.forEach((li) => {
-              if (li.textContent == response) {
+              if (li.textContent.includes(response)) {
                 li.classList.add("active");
               } else {
                 if (li.classList) {
@@ -54,18 +54,19 @@ function previewImage() {
   const file = document.querySelector("input[type=file]").files[0];
   const reader = new FileReader();
 
+  if (file) {
+    reader.readAsDataURL(file);
+  }
+
   reader.addEventListener(
     "load",
     function () {
-      preview.classList.add("mb-3")
       preview.innerHTML = '<img src="' + reader.result + '" class="img-thumbnail">';
     },
     false
   );
 
-  if (file) {
-    reader.readAsDataURL(file);
-  }
+  document.getElementById("result").classList.add("d-none"); // Hide result
 }
 
 // Bootstrap alert

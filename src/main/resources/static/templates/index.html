@@ -73,33 +73,29 @@
     </div>
     <p class="form-label">Upload a photo of your face and let our model predict your age with just a click of a button!
     </p>
-    <div class="row mb-3">
-      <div class="col-8">
+    <div class="row">
+      <div class="col-5">
         <div>
           <input class="form-control" type="file" id="faceImage" onchange="previewImage()">
         </div>
-      </div>
-      <div class="col-md-2">
-        <div class="d-grid gap-2">
+        <div class="d-grid gap-2 pt-1">
           <button class="btn btn-primary" type="button" id="predictBtn" onclick="predict_age()">
             <span id="buttonText">Predict Age</span>
           </button>
         </div>
       </div>
-    </div>
-    <div class="row mb-3">
       <div class="col-4" id="imagePreview"></div>
-      <div class="col-5 d-none" id="result">
+      <div class="col-3 d-none" id="result">
         <h3>Predicted age</h3>
         <ul class="list-group">
-          <li class="list-group-item list-group-item-primary">0-2</li>
-          <li class="list-group-item list-group-item-primary">3-9</li>
-          <li class="list-group-item list-group-item-primary">10-19</li>
-          <li class="list-group-item list-group-item-primary">20-29</li>
-          <li class="list-group-item list-group-item-primary">30-39</li>
-          <li class="list-group-item list-group-item-primary">40-49</li>
-          <li class="list-group-item list-group-item-primary">50-59</li>
-          <li class="list-group-item list-group-item-primary">60-69</li>
+          <li class="list-group-item list-group-item-primary">0-2 years</li>
+          <li class="list-group-item list-group-item-primary">3-9 years</li>
+          <li class="list-group-item list-group-item-primary">10-19 years</li>
+          <li class="list-group-item list-group-item-primary">20-29 years</li>
+          <li class="list-group-item list-group-item-primary">30-39 years</li>
+          <li class="list-group-item list-group-item-primary">40-49 years</li>
+          <li class="list-group-item list-group-item-primary">50-59 years</li>
+          <li class="list-group-item list-group-item-primary">60-69 years</li>
           <li class="list-group-item list-group-item-primary">more than 70</li>
         </ul>
       </div>
