@@ -8,3 +8,4 @@ LN2 für Modul "Model Deployment &amp; Maintenance" @ ZHAW.
 
 # Install docker image
 - Start the docker image with command `docker run -p 8000:8080 project2`
+- You can now access the website at [http://localhost:8000/](http://localhost:8000/).
